@@ -8,23 +8,7 @@ extern keymap_config_t keymap_config;
 #define QWERTY_LAYER 0
 #define LOWER_LAYER 1
 #define UPPER_LAYER 2
-#define SPACEFN_LAYER 3
-#define TENKEY_LAYER 4
-#define NORMAN_LAYER 5
-#define UNDERGLOW_LAYER 6
-
-// Tap Dance
-enum {
-  SFT_CAPS = 0,
-  MPLY_MUTE = 2,
-};
-
-// Macros
-enum macro_id {
-  M_USERNAME,
-  M_RANDDIGIT,
-  M_RANDLETTER,
-};
+#define UNDERGLOW_LAYER 3
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [QWERTY_LAYER] = KEYMAP( \
@@ -64,51 +48,4 @@ const uint16_t PROGMEM fn_actions[] = {
 
     // Tap for enter, hold for RAISE
     [2] = ACTION_LAYER_TAP_KEY(UPPER_LAYER, KC_ENT),
-};
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  uint8_t clockbyte=0;
-  clockbyte = TCNT1 % 256;
-  uint8_t rval;
-
-  // MACRODOWN only works in this function
-  switch(id) {
-    case M_USERNAME:
-      if (record->event.pressed) {
-        SEND_STRING("nicinabox");
-      }
-      break;
-
-    case M_RANDDIGIT:
-      // Generate, based on random number generator, a keystroke for
-      // a numeric digit chosen at random
-      random_value = ((random_value + randadd) * randmul) % randmod;
-      if (record->event.pressed) {
-        // Here, we mix the LCRNG with low bits from one of the system
-        // clocks via XOR in the theory that this may be more random
-        // than either separately
-        rval = (random_value ^ clockbyte) % 10;
-        // Note that KC_1 thru KC_0 are a contiguous range
-        register_code (KC_1 + rval);
-        unregister_code (KC_1 + rval);
-      }
-      break;
-
-    case M_RANDLETTER:
-      // Generate, based on random number generator, a keystroke for
-      // a letter chosen at random
-      // Here, we mix the LCRNG with low bits from one of the system
-      // clocks via XOR in the theory that this may be more random
-      // than either separately
-      random_value = ((random_value + randadd) * randmul) % randmod;
-      if (record->event.pressed) {
-        rval = (random_value ^ clockbyte) % 26;
-        register_code (KC_A + rval);
-        unregister_code (KC_A + rval);
-      }
-      break;
-  }
-
-  return MACRO_NONE;
 };
