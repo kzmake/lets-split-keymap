@@ -49,3 +49,6 @@ const uint16_t PROGMEM fn_actions[] = {
     // Tap for enter, hold for RAISE
     [2] = ACTION_LAYER_TAP_KEY(UPPER_LAYER, KC_ENT),
 };
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+};

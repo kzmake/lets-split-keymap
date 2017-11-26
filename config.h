@@ -5,7 +5,7 @@
 
 #undef RGBLED_NUM
 
-#define TAPPING_TERM 50
+#define TAPPING_TERM 100
 #define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 10
 #define RGBLIGHT_HUE_STEP 10
@@ -14,10 +14,6 @@
 
 #define USE_SERIAL
 #define EE_HANDS
-
-#define randadd 53
-#define randmul 181
-#define randmod 167
 
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
